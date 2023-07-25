@@ -180,7 +180,7 @@ class _menuState extends State<menu> {
           ),
           GestureDetector(
             onTap: () {
-              // Acción a realizar cuando se toque el ListTile
+              Navigator.of(context).pushNamed('/bebidas');
             },
             child: Card(
               child: Column(
@@ -200,7 +200,7 @@ class _menuState extends State<menu> {
           ),
           GestureDetector(
             onTap: () {
-              // Acción a realizar cuando se toque el ListTile
+              Navigator.of(context).pushNamed('/licoresl');
             },
             child: Card(
               child: Column(
