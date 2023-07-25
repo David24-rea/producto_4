@@ -14,6 +14,13 @@ class _bebidaslState extends State<bebidasl> {
       appBar: AppBar(
         title: Text("Listado Bebidas"),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed('/registrob');
+        },
+        backgroundColor: Color.fromARGB(255, 47, 144, 248),
+        child: Icon(Icons.add),
+      ),
     );
   }
 }

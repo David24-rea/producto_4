@@ -14,6 +14,13 @@ class _licoreslState extends State<licoresl> {
       appBar: AppBar(
         title: Text("Listado Licores"),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed('/');
+        },
+        backgroundColor: Color.fromARGB(255, 37, 202, 166),
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
