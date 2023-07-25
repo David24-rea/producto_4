@@ -100,7 +100,7 @@ class _menuState extends State<menu> {
           ),
           GestureDetector(
             onTap: () {
-              // Acción a realizar cuando se toque el ListTile
+              Navigator.of(context).pushNamed('/fideoslistado');
             },
             child: Card(
               child: Column(
