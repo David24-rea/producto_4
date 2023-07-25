@@ -12,7 +12,7 @@ class _azucaresLState extends State<azucaresL> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("LIstado"),
+        title: Text("LIstado de productos azucarados"),
       ),
     );
   }
