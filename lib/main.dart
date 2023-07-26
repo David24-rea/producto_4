@@ -3,6 +3,7 @@ import 'package:producto_4/bebidas/actualizar.dart';
 import 'package:producto_4/bebidas/bebidasl.dart';
 import 'package:producto_4/bebidas/registrob.dart';
 import 'package:producto_4/fideos_arinas/listado_fideos.dart';
+import 'package:producto_4/fideos_arinas/registros.dart';
 import 'package:producto_4/licores/actualizarl.dart';
 import 'package:producto_4/licores/licoresl.dart';
 import 'package:producto_4/licores/registrol.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         '/registrol': (context) => registrolicor(),
         // fideos
         '/fideoslistado':(context) => fideoslistado(),
+        '/crearfideos':(context) => crearfideos(),
       },
     );
   }
