@@ -14,6 +14,8 @@ class DbConnection {
                   'CREATE TABLE categorias(id INTEGER PRIMARY KEY,codigo_cat TEXT, nombre_cat TEXT, descripcion TEXT)'),
               await db.execute(
                   'CREATE TABLE producto (id INTEGER PRIMARY KEY,codigo_pro TEXT,nombre_pro TEXT, descripcion TEXT, categorias_id TEXT)'),
+                  await db.execute(
+                  'CREATE TABLE fideos (id INTEGER PRIMARY KEY,codigo_fi TEXT,nombre_fi TEXT, descripcion TEXT, cantidad TEXT, fecha TEXT)'),
             }));
   }
 
