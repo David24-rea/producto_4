@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:producto_4/entidades/bebidas.dart';
+import 'package:producto_4/controladores/controladorbebidas.dart';
+
 class registrob extends StatefulWidget {
   const registrob({super.key});
 
@@ -9,9 +12,11 @@ class registrob extends StatefulWidget {
 
 class _registrobState extends State<registrob> {
   final formInsert = GlobalKey<FormState>();
-  String? code;
-  String? name;
-  String? des;
+  String? tipo;
+  String? nombre;
+  int? precio;
+  String? descripcion;
+  String? fecha;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,18 +31,29 @@ class _registrobState extends State<registrob> {
           child: Form(
             key: formInsert,
             child: Column(children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  label: Text("Codigo"),
+              DropdownButtonFormField<String>(
+                decoration: InputDecoration(
+                  labelText: "Tipo de Bebidas",
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
                 ),
-                onSaved: (value) {
-                  code = value;
+                value: tipo,
+                onChanged: (newValue) {
+                  setState(() {
+                    tipo = newValue;
+                  });
                 },
+                items: ['Gaseosas', 'Aguas', 'Energisante', 'Sin Gas']
+                    .map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "El Código es requerido";
+                    return "El tipo es requerido";
                   }
                   return null;
                 },
@@ -47,12 +63,12 @@ class _registrobState extends State<registrob> {
               ),
               TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Nombre codigo"),
+                  label: Text("Nombre de la bebida"),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                 ),
                 onSaved: (value) {
-                  name = value;
+                  nombre = value;
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -66,22 +82,63 @@ class _registrobState extends State<registrob> {
               ),
               TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Descripción"),
+                  labelText: "Precio",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                 ),
                 onSaved: (value) {
-                  des = value;
+                  precio = int.parse(value!);
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "El descripción requerida";
+                    return "La precio es requerida";
                   }
                   return null;
                 },
               ),
               const SizedBox(
                 height: 10,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  label: Text("descripción"),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                ),
+                onSaved: (value) {
+                  descripcion = value;
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "El descripcion es requerido";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  label: Text("Fecha de registro"),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                ),
+                onSaved: (value) {
+                  fecha = value;
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "El Fecha es requerido";
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: 20,
               ),
               ElevatedButton(
                 onPressed: () {
@@ -125,16 +182,22 @@ class _registrobState extends State<registrob> {
   save() async {
     if (formInsert.currentState!.validate()) {
       formInsert.currentState!.save();
-      print(code);
-      print(name);
-      print(des);
+      print(tipo);
+      print(nombre);
+      print(precio);
+      print(descripcion);
+      print(fecha);
 
       ///llamar al funcion insert desde el controlador
-      /*var result = await catcontroler.insert(categoria(
-          code: code as String, name: name as String, des: des as String));
-      print(result);*/
+      var result = await controladorbebidas.insert(bebidas(
+          tipo: tipo as String,
+          nombre: nombre as String,
+          precio: precio as int,
+          descripcion: descripcion as String,
+          fecha: fecha as String));
+      print(result);
 
-      Navigator.of(context).pushNamed('');
+      Navigator.of(context).pushNamed('/bebidas');
     }
   }
 }

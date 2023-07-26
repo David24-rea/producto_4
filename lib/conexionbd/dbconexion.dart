@@ -11,9 +11,9 @@ class DbConnection {
         onCreate: ((db, version) async => {
               /* para crear tabla*/
               await db.execute(
-                  'CREATE TABLE categorias(id INTEGER PRIMARY KEY,codigo_cat TEXT, nombre_cat TEXT, descripcion TEXT)'),
+                  'CREATE TABLE bebidas(id INTEGER PRIMARY KEY,tipo TEXT, nombre TEXT,precio INTEGER,descripcion TEXT, fecha TEXTO)'),
               await db.execute(
-                  'CREATE TABLE producto (id INTEGER PRIMARY KEY,codigo_pro TEXT,nombre_pro TEXT, descripcion TEXT, categorias_id TEXT)'),
+                  'CREATE TABLE licores(id INTEGER PRIMARY KEY,tipo_li TEXT, nombre_li TEXT,precio_li INTEGER,descripcion_li TEXT, fecha_li TEXT)'),
             }));
   }
 
