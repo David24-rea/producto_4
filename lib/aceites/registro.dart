@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:producto_4/entidades/aceitres.dart';
 
-import 'package:producto_4/entidades/bebidas.dart';
-import 'package:producto_4/controladores/controladorbebidas.dart';
+import '../controladores/controladoraceites.dart';
 
-class registrob extends StatefulWidget {
-  const registrob({super.key});
+class crearaceite extends StatefulWidget {
+  const crearaceite({super.key});
 
   @override
-  State<registrob> createState() => _registrobState();
+  State<crearaceite> createState() => _UserViewState();
 }
 
-class _registrobState extends State<registrob> {
+class _UserViewState extends State<crearaceite> {
   final formInsert = GlobalKey<FormState>();
-  String? tipo;
-  String? nombre;
-  int? precio;
+  String? codigo_fi;
+  String? nombre_fi;
   String? descripcion;
+  String? cantidad;
   String? fecha;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Registro Bebidas"),
+        title: Text("INGRESO DE PRODUCTOS DE ACEITES"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -31,29 +32,18 @@ class _registrobState extends State<registrob> {
           child: Form(
             key: formInsert,
             child: Column(children: [
-              DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                  labelText: "Tipo de Bebidas",
+              TextFormField(
+                decoration: const InputDecoration(
+                  label: Text("Codigo"),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
                 ),
-                value: tipo,
-                onChanged: (newValue) {
-                  setState(() {
-                    tipo = newValue;
-                  });
+                onSaved: (value) {
+                  codigo_fi = value;
                 },
-                items: ['Gaseosas', 'Energisantes', 'Sin gas', 'lacteo']
-                    .map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "El tipo es requerido";
+                    return "El Código es requerido";
                   }
                   return null;
                 },
@@ -63,12 +53,12 @@ class _registrobState extends State<registrob> {
               ),
               TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Nombre de la bebida"),
+                  label: Text("Nombre "),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                 ),
                 onSaved: (value) {
-                  nombre = value;
+                  nombre_fi = value;
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -77,34 +67,12 @@ class _registrobState extends State<registrob> {
                   return null;
                 },
               ),
-              SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: "Precio",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                ),
-                onSaved: (value) {
-                  precio = int.parse(value!);
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "La precio es requerida";
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               const SizedBox(
                 height: 10,
               ),
               TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("descripción"),
+                  label: Text("Descripcion"),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                 ),
@@ -113,7 +81,7 @@ class _registrobState extends State<registrob> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "El descripcion es requerido";
+                    return "La desripcion es requerido";
                   }
                   return null;
                 },
@@ -123,7 +91,26 @@ class _registrobState extends State<registrob> {
               ),
               TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Fecha de registro"),
+                  label: Text("Cantidad"),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
+                ),
+                onSaved: (value) {
+                  cantidad = value;
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "La cantidad es requerido";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  label: Text("dd-mm-yyyy"),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                 ),
@@ -132,13 +119,13 @@ class _registrobState extends State<registrob> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "El Fecha es requerido";
+                    return "La fecha  es requerido";
                   }
                   return null;
                 },
               ),
-              SizedBox(
-                height: 20,
+              const SizedBox(
+                height: 10,
               ),
               ElevatedButton(
                 onPressed: () {
@@ -172,6 +159,41 @@ class _registrobState extends State<registrob> {
                   ],
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/');
+                },
+                style: ElevatedButton.styleFrom(
+                  visualDensity: VisualDensity.compact,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  elevation: 0,
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                    fontFamily:
+                        Theme.of(context).textTheme.bodyLarge?.fontFamily,
+                  ),
+                  minimumSize: const Size.fromHeight(50),
+                ),
+                child: const Stack(
+                  fit: StackFit.passthrough,
+                  children: <Widget>[
+                    Center(
+                      child: Text(
+                        "Regresar",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ]),
           ),
         ),
@@ -182,22 +204,21 @@ class _registrobState extends State<registrob> {
   save() async {
     if (formInsert.currentState!.validate()) {
       formInsert.currentState!.save();
-      print(tipo);
-      print(nombre);
-      print(precio);
+      print(codigo_fi);
+      print(nombre_fi);
       print(descripcion);
+      print(cantidad);
       print(fecha);
 
-      ///llamar al funcion insert desde el controlador
-      var result = await controladorbebidas.insert(bebidas(
-          tipo: tipo as String,
-          nombre: nombre as String,
-          precio: precio as int,
+      //
+      var result = await Controladoraceites.insert(Aceite(
+          codigo_fi: codigo_fi as String,
+          nombre_fi: nombre_fi as String,
           descripcion: descripcion as String,
+          cantidad: cantidad as String,
           fecha: fecha as String));
       print(result);
-
-      Navigator.of(context).pushNamed('/bebidas');
+      Navigator.of(context).pushNamed('/aceitelistado');
     }
   }
 }

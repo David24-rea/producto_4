@@ -1,0 +1,9 @@
+await db.execute(
+                  'CREATE TABLE enlatado(id INTEGER PRIMARY KEY,nombre_en TEXT,cantidad_en TEXT, descripcion TEXT)')
+
+
+
+main
+'/azucara': (context) => azucarl(),
+        '/registroa': (context) => registroazucar(),
+        '/actualizara': (context) => actualizara(),

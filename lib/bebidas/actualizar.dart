@@ -18,6 +18,7 @@ class _actualizarlState extends State<actualizarl> {
   String? fecha;
   @override
   Widget build(BuildContext context) {
+    bebidas date = ModalRoute.of(context)!.settings.arguments as bebidas;
     return Scaffold(
       appBar: AppBar(
         title: Text("Actualizar Bebidas"),
@@ -37,13 +38,13 @@ class _actualizarlState extends State<actualizarl> {
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                   ),
                 ),
-                value: tipo,
+                value: date.tipo,
                 onChanged: (newValue) {
                   setState(() {
                     tipo = newValue;
                   });
                 },
-                items: ['Gaseosas', 'Aguas', 'Energisante', 'Sin Gas']
+                items: ['Gaseosas', 'Energisantes', 'Sin gas', 'lacteo']
                     .map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -61,6 +62,7 @@ class _actualizarlState extends State<actualizarl> {
                 height: 10,
               ),
               TextFormField(
+                controller: TextEditingController(text: date.nombre),
                 decoration: const InputDecoration(
                   label: Text("Nombre de la bebida"),
                   border: OutlineInputBorder(
@@ -80,6 +82,7 @@ class _actualizarlState extends State<actualizarl> {
                 height: 20,
               ),
               TextFormField(
+                controller: TextEditingController(text: date.precio.toString()),
                 decoration: const InputDecoration(
                   labelText: "Precio",
                   border: OutlineInputBorder(
@@ -102,6 +105,7 @@ class _actualizarlState extends State<actualizarl> {
                 height: 10,
               ),
               TextFormField(
+                controller: TextEditingController(text: date.descripcion),
                 decoration: const InputDecoration(
                   label: Text("descripción"),
                   border: OutlineInputBorder(
@@ -121,6 +125,7 @@ class _actualizarlState extends State<actualizarl> {
                 height: 10,
               ),
               TextFormField(
+                controller: TextEditingController(text: date.fecha),
                 decoration: const InputDecoration(
                   label: Text("Fecha de registro"),
                   border: OutlineInputBorder(
@@ -141,7 +146,7 @@ class _actualizarlState extends State<actualizarl> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  save();
+                  save(date.id as int);
                 },
                 style: ElevatedButton.styleFrom(
                   visualDensity: VisualDensity.compact,
@@ -178,7 +183,7 @@ class _actualizarlState extends State<actualizarl> {
     );
   }
 
-  save() async {
+  save(int id) async {
     if (formInsert.currentState!.validate()) {
       formInsert.currentState!.save();
       print(tipo);
@@ -188,7 +193,8 @@ class _actualizarlState extends State<actualizarl> {
       print(fecha);
 
       ///llamar al funcion insert desde el controlador
-      var result = await controladorbebidas.insert(bebidas(
+      var result = await controladorbebidas.update(bebidas(
+          id: id as int,
           tipo: tipo as String,
           nombre: nombre as String,
           precio: precio as int,

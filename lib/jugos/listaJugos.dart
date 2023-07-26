@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:producto_4/controladores/controladorfideos.dart';
-import 'package:producto_4/entidades/fideos.dart';
+import 'package:producto_4/entidades/jugos.dart';
 
-class fideoslistado extends StatefulWidget {
-  const fideoslistado({Key? key});
+import '../../controladores/controladorJugos.dart';
+
+class listaJugosController extends StatefulWidget {
+  const listaJugosController({super.key});
 
   @override
-  State<fideoslistado> createState() => _formularioState();
+  State<listaJugosController> createState() => _listaJugosControllerState();
 }
 
-class _formularioState extends State<fideoslistado> {
+class _listaJugosControllerState extends State<listaJugosController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('LISTA', textAlign: TextAlign.center),
-        centerTitle: true,
+        title: Text('Gestionar Jugos'),
       ),
       body: WillPopScope(
         onWillPop: () async {
           // SystemNavigator.pop();
-          Navigator.of(context).pushNamed('/fideoslistado');
+          Navigator.of(context).pushNamed('/');
           return await showDialog(
               context: context,
               builder: (BuildContext context) => AlertDialog(
@@ -44,9 +44,9 @@ class _formularioState extends State<fideoslistado> {
         },
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: FutureBuilder<List<Fideo>>(
-              future: Controladorfideos.select(),
-              builder: (context, AsyncSnapshot<List<Fideo>> snapshot) {
+          child: FutureBuilder<List<Jugos>>(
+              future: ControladorJugos.select(),
+              builder: (context, AsyncSnapshot<List<Jugos>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                     child: Text("Cargando......"),
@@ -56,22 +56,22 @@ class _formularioState extends State<fideoslistado> {
                     child: Text(snapshot.error.toString()),
                   );
                 } else if (snapshot.hasData) {
-                  List<Fideo>? fideos = snapshot.data;
+                  List<Jugos>? jugos = snapshot.data;
                   return ListView(
                     children: [
-                      for (var fideo in fideos!)
+                      for (var Jugos in jugos!)
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context)
-                                .pushNamed('/edit', arguments: fideo);
+                                .pushNamed('/updateJugos', arguments: Jugos);
                           },
                           child: Card(
                             child: Row(
                               children: [
                                 Expanded(
-                                    child: Text(fideo.nombre_fi +
+                                    child: Text(Jugos.nombre_jug +
                                         '  ' +
-                                        fideo.descripcion.toString())),
+                                        Jugos.descripcion_jug.toString())),
                                 IconButton(
                                     icon: Icon(Icons.delete),
                                     onPressed: () => showDialog(
@@ -84,8 +84,8 @@ class _formularioState extends State<fideoslistado> {
                                               actions: [
                                                 TextButton(
                                                     onPressed: () async {
-                                                      await Controladorfideos
-                                                          .delete(fideo);
+                                                      await ControladorJugos
+                                                          .delete(Jugos);
                                                       Navigator.of(context)
                                                           .pushNamed('/');
                                                     },
@@ -113,7 +113,7 @@ class _formularioState extends State<fideoslistado> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed('/crearfideos');
+          Navigator.of(context).pushNamed('/addJugos');
         },
         child: Icon(Icons.add),
       ),

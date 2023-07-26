@@ -16,6 +16,14 @@ class DbConnection {
                   'CREATE TABLE licores(id INTEGER PRIMARY KEY,tipo_li TEXT, nombre_li TEXT,precio_li INTEGER,descripcion_li TEXT, fecha_li TEXT)'),
               await db.execute(
                   'CREATE TABLE fideos (id INTEGER PRIMARY KEY,codigo_fi TEXT,nombre_fi TEXT, descripcion TEXT, cantidad TEXT, fecha TEXT)'),
+              await db.execute(
+                  'CREATE TABLE enlatado(id INTEGER PRIMARY KEY,nombre_en TEXT,cantidad_en TEXT, descripcion TEXT)'),
+              await db.execute(
+                  'CREATE TABLE aceites (id INTEGER PRIMARY KEY,codigo_fi TEXT,nombre_fi TEXT, descripcion TEXT, cantidad TEXT, fecha TEXT)'),
+              await db.execute(
+                  'CREATE TABLE Granos (id INTEGER PRIMARY KEY,codigo_gra TEXT,nombre_gra TEXT, descripcion_gra TEXT, cantidad_gra TEXT, fecha_gra TEXT)'),
+              await db.execute(
+                  'CREATE TABLE Jugos (id INTEGER PRIMARY KEY,codigo_jug TEXT,nombre_jug TEXT, descripcion_jug TEXT, cantidad_jug TEXT, fecha_jug TEXT)'),
             }));
   }
 

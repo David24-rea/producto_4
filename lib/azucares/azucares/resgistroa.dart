@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:producto_4/controladores/controladorazucar.dart';
+import 'package:producto_4/entidades/azucares.dart';
 
-import 'package:producto_4/entidades/bebidas.dart';
-import 'package:producto_4/controladores/controladorbebidas.dart';
-
-class registrob extends StatefulWidget {
-  const registrob({super.key});
+class registroazucar extends StatefulWidget {
+  const registroazucar({super.key});
 
   @override
-  State<registrob> createState() => _registrobState();
+  State<registroazucar> createState() => _registroazucarState();
 }
 
-class _registrobState extends State<registrob> {
+class _registroazucarState extends State<registroazucar> {
   final formInsert = GlobalKey<FormState>();
-  String? tipo;
   String? nombre;
-  int? precio;
+  String? cantidad;
   String? descripcion;
-  String? fecha;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Registro Bebidas"),
+        title: Text("Registro"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -31,29 +28,18 @@ class _registrobState extends State<registrob> {
           child: Form(
             key: formInsert,
             child: Column(children: [
-              DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                  labelText: "Tipo de Bebidas",
+              TextFormField(
+                decoration: const InputDecoration(
+                  label: Text("Codigo"),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
+                      borderRadius: BorderRadius.all(Radius.circular(15))),
                 ),
-                value: tipo,
-                onChanged: (newValue) {
-                  setState(() {
-                    tipo = newValue;
-                  });
+                onSaved: (value) {
+                  nombre = value;
                 },
-                items: ['Gaseosas', 'Energisantes', 'Sin gas', 'lacteo']
-                    .map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "El tipo es requerido";
+                    return "El Código es requerido";
                   }
                   return null;
                 },
@@ -63,12 +49,12 @@ class _registrobState extends State<registrob> {
               ),
               TextFormField(
                 decoration: const InputDecoration(
-                  label: Text("Nombre de la bebida"),
+                  label: Text("Cantidad de leche "),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                 ),
                 onSaved: (value) {
-                  nombre = value;
+                  cantidad = value;
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -82,29 +68,7 @@ class _registrobState extends State<registrob> {
               ),
               TextFormField(
                 decoration: const InputDecoration(
-                  labelText: "Precio",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                ),
-                onSaved: (value) {
-                  precio = int.parse(value!);
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "La precio es requerida";
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  label: Text("descripción"),
+                  label: Text("Descripción"),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                 ),
@@ -113,32 +77,13 @@ class _registrobState extends State<registrob> {
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "El descripcion es requerido";
+                    return "El descripción requerida";
                   }
                   return null;
                 },
               ),
               const SizedBox(
                 height: 10,
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  label: Text("Fecha de registro"),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                ),
-                onSaved: (value) {
-                  fecha = value;
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "El Fecha es requerido";
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: 20,
               ),
               ElevatedButton(
                 onPressed: () {
@@ -182,22 +127,17 @@ class _registrobState extends State<registrob> {
   save() async {
     if (formInsert.currentState!.validate()) {
       formInsert.currentState!.save();
-      print(tipo);
       print(nombre);
-      print(precio);
+      print(cantidad);
       print(descripcion);
-      print(fecha);
 
       ///llamar al funcion insert desde el controlador
-      var result = await controladorbebidas.insert(bebidas(
-          tipo: tipo as String,
+      var result = await azucarcontroler.insert(azucar(
           nombre: nombre as String,
-          precio: precio as int,
-          descripcion: descripcion as String,
-          fecha: fecha as String));
+          cantidad: cantidad as String,
+          descripcion: descripcion as String));
       print(result);
-
-      Navigator.of(context).pushNamed('/bebidas');
+      Navigator.of(context).pushNamed('/azucara');
     }
   }
 }

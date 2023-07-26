@@ -1,6 +1,6 @@
 class bebidas {
   final int? id;
-  final String tipo;
+  final String? tipo;
   final String nombre;
   final int precio;
   final String descripcion;
